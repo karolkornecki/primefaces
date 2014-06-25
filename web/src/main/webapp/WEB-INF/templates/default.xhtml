@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:custom="http://kornecki.pl/jsf"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Java EE 6 Application</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <h:outputStylesheet name="css/screen.css"/>
+</h:head>
+<h:body>
+    <div id="menu">
+        <h:form>
+            <p:menubar>
+                <p:submenu label="Opcje" icon="ui-icon-document">
+                    <p:menuitem value="#{msg['add']}" actionListener="#{searchController.chooseAdd}" oncomplete="dlg.show()"/>
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+
+        <p:outputPanel autoUpdate="true">
+            <p:dialog id="modalDialog" header="#{msg['add']}"
+                      widgetVar="dlg" modal="true"
+                      height="250">
+                <h:form>
+                     <custom:orderForm searchMode="false" data="#{searchController.newOrder}"></custom:orderForm>
+                </h:form>
+            </p:dialog>
+        </p:outputPanel>
+    </div>
+    <div id="container" style="margin-top: 20px;">
+        <div id="content">
+            <ui:insert name="content">
+            </ui:insert>
+        </div>
+        <div id="footer">
+            Karol Kornecki for BSB.
+        </div>
+    </div>
+</h:body>
+</html>

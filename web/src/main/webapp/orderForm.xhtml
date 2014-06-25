@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+    <h:panelGroup layout="block" style="margin: 10px; width: 100%">
+        <p><h:outputText
+                value="#{searchMode ? msg['search.fillCriteria'] : msg['search.fillOrderData']}"
+                style="text-align: center; font-weight: bold; font-size: 20px;"/></p>
+        <h:panelGrid columns="6">
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{searchMode}">
+                <h:outputText value="#{msg['search.id']}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{searchMode}">
+                <h:inputText value="#{data.id}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{!searchMode}">
+                <h:outputText value="#{msg['search.createDate']}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{!searchMode}">
+                <p:calendar effect="slideDown" value="#{data.createDate}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{searchMode}">
+                <h:outputText value="#{msg['search.dateFrom']}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{searchMode}">
+                <p:calendar effect="slideDown" value="#{data.dateFrom}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{searchMode}">
+                <h:outputText value="#{msg['search.dateTo']}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{searchMode}">
+                <p:calendar effect="slideDown" value="#{data.dateTo}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px">
+                <h:outputText value="#{msg['search.serviceName']}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px">
+                <h:inputText value="#{data.serviceName}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px">
+                <h:outputText value="#{msg['search.orderType']}"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{searchMode}">
+                <h:selectOneMenu value="#{data.type}" style="width: 180px;">
+                    <f:selectItem itemLabel="" itemValue=""/>
+                    <f:selectItems value="#{staticDictionaryController.orderTypeValues}"/>
+                </h:selectOneMenu>
+            </h:panelGroup>
+            <h:panelGroup layout="block" style="margin: 10px"
+                          rendered="#{!searchMode}">
+                <h:selectOneMenu value="#{data.type}" style="width: 180px;">
+                    <f:selectItems value="#{staticDictionaryController.orderTypeValues}"/>
+                </h:selectOneMenu>
+            </h:panelGroup>
+        </h:panelGrid>
+        <h:panelGroup layout="block" style="width: 25%; margin: 0 auto;"
+                      rendered="#{searchMode}">
+            <h:panelGroup layout="block" style="margin: 10px;">
+                <p:commandButton value="#{msg['search.searchButton']}" action="#{searchController.findByCriteria}"
+                                 update="ordersTable" style="width: 200px"/>
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup layout="block" style="width: 25%; margin: 0 auto;"
+                      rendered="#{!searchMode}">
+            <h:panelGroup layout="block" style="margin: 10px;">
+                <p:commandButton value="#{msg['search.addButton']}" action="#{searchController.addAction}"
+                                 update=":form:ordersTable" style="width: 200px"/>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
+</ui:composition>

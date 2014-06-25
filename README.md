@@ -1,4 +1,3 @@
-PrimeFaces
-==========
-
-Sample PrimeFaces CRUD Application
+Sample PrimeFaces Application
+====
+author: Karol Kornecki

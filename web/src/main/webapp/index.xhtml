@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:custom="http://kornecki.pl/jsf"
+                template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:outputPanel autoUpdate="true">
+                <p:growl id="messages"/>
+            </p:outputPanel>
+
+            <h:panelGroup layout="block">
+                <custom:orderForm searchMode="true" data="#{searchController.criteria}"></custom:orderForm>
+            </h:panelGroup>
+
+
+            <h:panelGroup layout="block" style="margin-top: 40px;">
+                <p:dataTable id="ordersTable" var="order" editable="true" value="#{searchController.orders}"
+                             paginatorPosition="bottom"
+                             paginator="true" rows="10">
+                    <p:ajax event="rowEdit" listener="#{searchController.onEdit}" update="ordersTable"/>
+                    <p:ajax event="rowEditCancel" listener="#{searchController.onCancel}" update="ordersTable"/>
+                    <p:column headerText="Id">
+                        <h:outputText value="#{order.id}"/>
+
+                    </p:column>
+
+                    <p:column headerText="#{msg['search.createDate']}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{order.textDate}"/></f:facet>
+                            <f:facet name="input"><p:calendar effect="slideDown" value="#{order.createDate}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="#{msg['search.serviceName']}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{order.serviceName}"/></f:facet>
+                            <f:facet name="input"><h:inputText value="#{order.serviceName}"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Typ">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{order.type.text}"/></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{order.type}" style="width:100%">
+                                    <f:selectItems value="#{staticDictionaryController.orderTypeValues}"/>
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="#{msg['search.delete']}"
+                                         action="#{searchController.deleteAction(order.id)}" update="ordersTable"/>
+                    </p:column>
+                    <p:column style="width:6%">
+                        <p:rowEditor/>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>
